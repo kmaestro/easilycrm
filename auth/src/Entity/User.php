@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\Enum\Status;
@@ -41,6 +43,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         Status $status
     )
     {
+        $this->id = $id;
+        $this->date = $date;
+        $this->email = $email;
+        $this->status = $status;
     }
 
     public static function requestJoinByEmail(
