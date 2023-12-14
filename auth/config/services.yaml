@@ -29,12 +29,13 @@ services:
     App\Service\ExceptionHandler\ExceptionMappingResolver:
         arguments: [ '%exceptions%' ]
 
-    League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface:
-        class: App\Repository\AccessTokenRepository
-        decorates: 'League\Bundle\OAuth2ServerBundle\Repository\AccessTokenRepository'
     App\Listener\ApiExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 10 }
     App\Listener\ValidationExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, priority: 15 }
+    App\Listener\JwtCreatedListener:
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created }
+

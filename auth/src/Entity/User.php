@@ -60,19 +60,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $user;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
 
     public function getUsername(): string
     {
-        return $this->username;
+        return $this->email;
     }
 
-    public function setUsername(string $username): static
+    public function setUsername(string $email): static
     {
-        $this->username = $username;
+        $this->email = $email;
 
         return $this;
     }
@@ -84,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string)$this->username;
+        return (string)$this->email;
     }
 
     /**
