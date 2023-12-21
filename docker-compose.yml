@@ -36,13 +36,13 @@ services:
   frontend-node:
     build:
       context: frontend/docker/development/node
-    environment:
-      WDS_SOCKET_PORT: 0
-      REACT_APP_AUTH_URL: http://api.localhost
     volumes:
       - ./frontend:/app
+    ports:
+      - '4200:4200'
+    command: sh -c "yarn start --host=`hostname -i`"
 #    command: sh -c "until [ -f .ready ] ; do sleep 1 ; done && yarn start"
-    tty: true
+#    tty: true
 
   frontend-node-cli:
     build:
@@ -70,24 +70,6 @@ services:
     build:
       context: api/docker
       dockerfile: development/php-fpm/Dockerfile
-    environment:
-      APP_ENV: dev
-      APP_DEBUG: 1
-      PHP_IDE_CONFIG: serverName=API
-      DB_HOST: api-postgres
-      DB_USER: app
-      DB_PASSWORD_FILE: /run/secrets/api_db_password
-      DB_NAME: app
-      MAILER_HOST: mailer
-      MAILER_PORT: 1025
-      MAILER_USERNAME: app
-      MAILER_PASSWORD_FILE: /run/secrets/api_mailer_password
-      MAILER_FROM_EMAIL: mail@app.test
-      FRONTEND_URL: http://localhost
-      SENTRY_DSN_FILE: /run/secrets/sentry_dsn
-      JWT_ENCRYPTION_KEY_FILE: /run/secrets/jwt_encryption_key
-      JWT_PUBLIC_KEY_PATH: /run/secrets/jwt_public_key
-      JWT_PRIVATE_KEY_PATH: /run/secrets/jwt_private_key
     volumes:
       - ./api:/app
     secrets:
@@ -102,23 +84,6 @@ services:
     build:
       context: api/docker
       dockerfile: development/php-cli/Dockerfile
-    environment:
-      APP_ENV: dev
-      APP_DEBUG: 1
-      DB_HOST: api-postgres
-      DB_USER: app
-      DB_PASSWORD_FILE: /run/secrets/api_db_password
-      DB_NAME: app
-      MAILER_HOST: mailer
-      MAILER_PORT: 1025
-      MAILER_USERNAME: app
-      MAILER_PASSWORD_FILE: /run/secrets/api_mailer_password
-      MAILER_FROM_EMAIL: mail@app.test
-      FRONTEND_URL: http://localhost
-      SENTRY_DSN_FILE: /run/secrets/sentry_dsn
-      JWT_ENCRYPTION_KEY_FILE: /run/secrets/jwt_encryption_key
-      JWT_PUBLIC_KEY_PATH: /run/secrets/jwt_public_key
-      JWT_PRIVATE_KEY_PATH: /run/secrets/jwt_private_key
     volumes:
       - ./api:/app
     secrets:
@@ -162,24 +127,6 @@ services:
     build:
       context: auth/docker
       dockerfile: development/php-fpm/Dockerfile
-    environment:
-      APP_ENV: dev
-      APP_DEBUG: 1
-      PHP_IDE_CONFIG: serverName=AUTH
-      DB_HOST: auth-postgres
-      DB_USER: app
-      DB_PASSWORD_FILE: /run/secrets/api_db_password
-      DB_NAME: app
-      MAILER_HOST: mailer
-      MAILER_PORT: 1025
-      MAILER_USERNAME: app
-      MAILER_PASSWORD_FILE: /run/secrets/api_mailer_password
-      MAILER_FROM_EMAIL: mail@app.test
-      FRONTEND_URL: http://localhost
-      SENTRY_DSN_FILE: /run/secrets/sentry_dsn
-      JWT_ENCRYPTION_KEY_FILE: /run/secrets/jwt_encryption_key
-      JWT_PUBLIC_KEY_PATH: /run/secrets/jwt_public_key
-      JWT_PRIVATE_KEY_PATH: /run/secrets/jwt_private_key
     volumes:
       - ./auth:/app
     secrets:
@@ -194,23 +141,6 @@ services:
     build:
       context: auth/docker
       dockerfile: development/php-cli/Dockerfile
-    environment:
-      APP_ENV: dev
-      APP_DEBUG: 1
-      DB_HOST: auth-postgres
-      DB_USER: app
-      DB_PASSWORD_FILE: /run/secrets/api_db_password
-      DB_NAME: app
-      MAILER_HOST: mailer
-      MAILER_PORT: 1025
-      MAILER_USERNAME: app
-      MAILER_PASSWORD_FILE: /run/secrets/api_mailer_password
-      MAILER_FROM_EMAIL: mail@app.test
-      FRONTEND_URL: http://localhost
-      SENTRY_DSN_FILE: /run/secrets/sentry_dsn
-      JWT_ENCRYPTION_KEY_FILE: /run/secrets/jwt_encryption_key
-      JWT_PUBLIC_KEY_PATH: /run/secrets/jwt_public_key
-      JWT_PRIVATE_KEY_PATH: /run/secrets/jwt_private_key
     volumes:
       - ./auth:/app
     secrets:
